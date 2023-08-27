@@ -5,7 +5,7 @@
 (generate_opam_files true)
 
 (source
- (github abooishaaq/cryptopals-ocaml))
+ (github abooishaaq/cryptopals))
 
 (authors "Malik Ammar Faisal")
 
@@ -13,7 +13,7 @@
 
 (license LICENSE)
 
-(documentation https://github.com/abooishaaq/cryptopals-ocaml)
+(documentation https://github.com/abooishaaq/cryptopals)
 
 (package
  (name cryptopals)

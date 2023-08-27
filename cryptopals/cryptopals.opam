@@ -5,9 +5,9 @@ description: "Solutions to the cryptopals.com challenges"
 maintainer: ["Malik Ammar Faisal"]
 authors: ["Malik Ammar Faisal"]
 license: "LICENSE"
-homepage: "https://github.com/abooishaaq/cryptopals-ocaml"
-doc: "https://github.com/abooishaaq/cryptopals-ocaml"
-bug-reports: "https://github.com/abooishaaq/cryptopals-ocaml/issues"
+homepage: "https://github.com/abooishaaq/cryptopals"
+doc: "https://github.com/abooishaaq/cryptopals"
+bug-reports: "https://github.com/abooishaaq/cryptopals/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.9"}
@@ -28,4 +28,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/abooishaaq/cryptopals-ocaml.git"
+dev-repo: "git+https://github.com/abooishaaq/cryptopals.git"
