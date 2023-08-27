@@ -61,7 +61,18 @@ let challenge4 =
   aux 0 [] |> List.sort (fun (a, _) (b, _) -> compare b a) |> List.hd |> snd |> Bytes.to_string |> print_string
 ;;
 
+let challenge5 = 
+  let input = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal" in
+  let key = "ICE" in
+  let rec repeat str times aux =
+    if times = 0 then aux
+    else repeat str (times - 1) (str ^ aux) in
+  let key_hexed = repeat (String.of_bytes (bytes_to_hex (Bytes.of_string key))) (String.length input / String.length key + 1) "" in
+  let xor = hex_xor (String.of_bytes (bytes_to_hex (Bytes.of_string input))) key_hexed in
+  print_endline (String.of_bytes xor)
+;;
+
 challenge3;;
 challenge4;;
-
+challenge5;;
 
