@@ -1,0 +1,25 @@
+(lang dune 3.9)
+
+(name cryptopals)
+
+(generate_opam_files true)
+
+(source
+ (github abooishaaq/cryptopals-ocaml))
+
+(authors "Malik Ammar Faisal")
+
+(maintainers "Malik Ammar Faisal")
+
+(license LICENSE)
+
+(documentation https://github.com/abooishaaq/cryptopals-ocaml)
+
+(package
+ (name cryptopals)
+ (synopsis "cryptopals.com challenges")
+ (description "Solutions to the cryptopals.com challenges")
+ (depends ocaml dune base64))
+ 
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
