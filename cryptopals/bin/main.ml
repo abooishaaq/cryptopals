@@ -6,12 +6,6 @@ open Cryptopals.Hex_xor
 open Cryptopals.Bytes_xor
 open Cryptopals.Utils
 
-(* CHARACTER_FREQ = {
-    'a': 0.0651738, 'b': 0.0124248, 'c': 0.0217339, 'd': 0.0349835, 'e': 0.1041442, 'f': 0.0197881, 'g': 0.0158610,
-    'h': 0.0492888, 'i': 0.0558094, 'j': 0.0009033, 'k': 0.0050529, 'l': 0.0331490, 'm': 0.0202124, 'n': 0.0564513,
-    'o': 0.0596302, 'p': 0.0137645, 'q': 0.0008606, 'r': 0.0497563, 's': 0.0515760, 't': 0.0729357, 'u': 0.0225134,
-    'v': 0.0082903, 'w': 0.0171272, 'x': 0.0013692, 'y': 0.0145984, 'z': 0.0007836, ' ': 0.1918182
-} *)
 let asciifreq c =
   match c with
   | 'a' -> 0.0651738
@@ -65,18 +59,19 @@ let rec repeat str times aux =
 
 let challenge3 =
   let hex = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736" in
+  let enc = hex_to_bytes hex in
   let l = String.length hex / 2 in
-  let rec aux i acc =
-    if i = 256 then acc
+  let rec aux i =
+    if i = 256 then []
     else
       let byte = Char.chr i in
-      let byte_hexed = repeat (String.of_bytes (bytes_to_hex (Bytes.make 1 byte))) l "" in
-      let xor = hex_xor hex byte_hexed in
-      let res = hex_to_bytes (String.of_bytes xor) in
-      let score = score (Bytes.to_string res) in
-      aux (i + 1) ((score, res) :: acc);
+      let keyy = Bytes.make l byte in
+      let xor = bytes_xor enc keyy in
+      let res = String.of_bytes xor in
+      let score = score res in
+      (score, res) :: aux (i + 1);
   in
-  aux 0 [] |> List.sort (fun (a, _) (b, _) -> compare b a) |> List.hd |> snd |> Bytes.to_string |> print_endline
+  aux 0 |> List.sort (fun (a, _) (b, _) -> compare b a) |> List.hd |> snd |> print_endline
 ;;
 
 let challenge4 = 
