@@ -2,7 +2,6 @@ open Cryptopals.Hex_to_bytes
 open Cryptopals.Bytes_to_hex
 open Cryptopals.Base64_to_bytes
 open Cryptopals.Hamming_distance
-open Cryptopals.Hex_xor
 open Cryptopals.Bytes_xor
 open Cryptopals.Utils
 
@@ -82,26 +81,27 @@ let challenge4 =
       if score > fst acc then (score, line) else acc
     ) (0.0, "") lines in
   let hex = snd best in
-  let l = String.length hex / 2 in
-  let rec aux i acc =
-    if i = 256 then acc
+  let enc = hex_to_bytes hex in
+  let l = Bytes.length enc in
+  let rec aux i =
+    if i = 256 then []
     else
       let byte = Char.chr i in
-      let byte_hexed = repeat (String.of_bytes (bytes_to_hex (Bytes.make 1 byte))) l "" in
-      let xor = hex_xor hex byte_hexed in
-      let res = hex_to_bytes (String.of_bytes xor) in
-      let score = score (Bytes.to_string res) in
-      aux (i + 1) ((score, res) :: acc);
+      let keyy = Bytes.make l byte in
+      let xor = bytes_xor enc keyy in
+      let score = score (Bytes.to_string xor) in
+      (score, xor) :: aux (i + 1);
   in
-  aux 0 [] |> List.sort (fun (a, _) (b, _) -> compare b a) |> List.hd |> snd |> Bytes.to_string |> print_string
+  aux 0 |> List.sort (fun (a, _) (b, _) -> compare b a) |> List.hd |> snd |> Bytes.to_string |> print_endline
 ;;
 
 let challenge5 = 
   let input = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal" in
   let key = "ICE" in
-  let key_hexed = repeat (String.of_bytes (bytes_to_hex (Bytes.of_string key))) (String.length input / String.length key + 1) "" in
-  let xor = hex_xor (String.of_bytes (bytes_to_hex (Bytes.of_string input))) key_hexed in
-  print_endline (String.of_bytes xor)
+  let key = Bytes.of_string key in
+  let times = (String.length input / Bytes.length key) + 1 in
+  let xor = bytes_xor (Bytes.of_string input) (repeat_bytes key times) in
+  print_endline (bytes_to_hex xor |> Bytes.to_string)
 ;;
 
 let challenge6 = 
